@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Twitch redirect</title>
+	<script>
+		window.onload = function() {
+			//Fragment részből kiszedjük az access_token-tabindex
+			const fragment = window.location.hash.substring(1);
+			const params = new URLSearchParams(fragment);
+			const token = params.get("access_token");
+			
+			if (fragment) {
+				if (!token)
+					document.body.innerText = "Token nem található.";
+				//Indítsd el az Android appot intent URI-val
+				const appUrl = `intent://callback#${fragment}#Intent;scheme=twitchauth;package=hu.zolcsieles.twitchmod;end`;
+				window.location.href = appUrl;
+			} else {
+				document.body.innerText = "Paraméterek nem találhatóak.";
+				const appUrl = `intent://callback#Intent;scheme=twitchauth;package=hu.zolcsieles.twitchmod;end`;
+				window.location.href = appUrl;
+			}
+		}
+	</script>
+</head>
+<body>
+	Bejelentkezés...
+</body>
+</html>
